@@ -1,4 +1,6 @@
 import axios from "axios";
+import { db } from "../firebase/config";
+import { collection, getDocs } from "firebase/firestore";
 
 export class TriviaRepository {
   async getQuestion() {
@@ -9,36 +11,13 @@ export class TriviaRepository {
     ).data.results[0];
   }
 
-  async addPost(post) {
-    const postDto = {
-      id: post.id,
-      title: post.title,
-      body: post.content,
-      userId: 1,
-    };
-    return await (
-      await axios.post("https://jsonplaceholder.typicode.com/posts", postDto)
-    ).data;
-  }
-
-  async removePost(id) {
-    return await axios.delete(
-      `https://jsonplaceholder.typicode.com/posts/${id}`
-    );
-  }
-
-  async updatePost(post) {
-    const postDto = {
-      id: post.id,
-      title: post.title,
-      body: post.content,
-      userId: 1,
-    };
-    return await (
-      await axios.put(
-        `https://jsonplaceholder.typicode.com/posts/${post.id}`,
-        postDto
-      )
-    ).data;
+  async getLeaderboard() {
+    const ref = collection(db, "leaderboard");
+    const snapshot = await getDocs(ref);
+    let results = [];
+    snapshot.docs.forEach((doc) => {
+      results.push(doc.data());
+    });
+    return results;
   }
 }

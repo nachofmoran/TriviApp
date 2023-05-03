@@ -19,7 +19,6 @@ describe("Get question use case", () => {
     });
 
     const data = await GetQuestionUseCase.execute();
-    console.log("question en test", data);
 
     expect(data.correctAnswer).toBe(QUESTION.correct_answer);
   });
