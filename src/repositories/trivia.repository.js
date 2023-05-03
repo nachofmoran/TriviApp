@@ -1,6 +1,6 @@
 import axios from "axios";
 import { db } from "../firebase/config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 
 export class TriviaRepository {
   async getQuestion() {
@@ -19,5 +19,13 @@ export class TriviaRepository {
       results.push(doc.data());
     });
     return results;
+  }
+
+  async addScore(player, score) {
+    const ref = collection(db, "leaderboard");
+    await addDoc(ref, {
+      name: player,
+      score: score,
+    });
   }
 }
