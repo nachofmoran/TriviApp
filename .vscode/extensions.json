@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "chakrounanas.turbo-console-log",
+    "firsttris.vscode-jest-runner"
+  ]
+}
