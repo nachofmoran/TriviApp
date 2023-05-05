@@ -18,7 +18,8 @@ describe("Add score use case", () => {
       };
     });
 
-    const data = await AddScoreUseCase.execute(LEADERBOARD, "Lorena", 7);
-    expect(data.length).toBe(LEADERBOARD.length + 1);
+    //const data = await AddScoreUseCase.execute(LEADERBOARD, "Lorena", 7);
+    const data = await AddScoreUseCase.execute("Lorena", 7);
+    expect(data.name).toBe("Lorena");
   });
 });

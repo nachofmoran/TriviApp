@@ -1,7 +1,6 @@
 export class Question {
-  constructor({ question, correctAnswer, incorrectAnswers }) {
+  constructor({ question, answers }) {
     this.question = question;
-    this.correctAnswer = correctAnswer;
-    this.incorrectAnswers = incorrectAnswers;
+    this.answers = answers;
   }
 }

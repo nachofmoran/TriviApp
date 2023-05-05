@@ -1,4 +1,5 @@
 import { LitElement, html } from "lit";
+import { state } from "../valtio/valtio";
 
 export class LeaderboardComponent extends LitElement {
   static get properties() {
@@ -10,7 +11,11 @@ export class LeaderboardComponent extends LitElement {
   }
 
   render() {
-    return html` <h1>Leaderboard</h1> `;
+    return html`
+      <h1>Leaderboard</h1>
+      <h2>lit ${state.count}</h2>
+      <h2>lit ${state.player}</h2>
+    `;
   }
 
   createRenderRoot() {

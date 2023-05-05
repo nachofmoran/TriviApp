@@ -7,12 +7,15 @@ export class HomeComponent extends LitElement {
 
   async connectedCallback() {
     super.connectedCallback();
-    console.log("entramos en el callback");
   }
 
   render() {
-    return html` <h1>Home</h1> `;
+    return html`
+      <h1>Home</h1>
+      <a href="/game">Play</a>
+    `;
   }
+
   createRenderRoot() {
     return this;
   }
