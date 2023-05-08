@@ -7,12 +7,9 @@ export class GetQuestionUseCase {
     const repository = new TriviaRepository();
     const data = await repository.getQuestion();
 
-    //const question = decodeHtml(data.question);
     const question = data.question;
-    //const answers = [{ data: decodeHtml(data.correct_answer), correct: true }];
     const answers = [{ data: data.correct_answer, correct: true }];
     data.incorrect_answers.map((item) => {
-      //answers.push({ data: decodeHtml(item), correct: false });
       answers.push({ data: item, correct: false });
     });
     console.log(answers);

@@ -1,22 +1,275 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;900&display=swap");
 @import url("./reset.css");
 
 html {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
-}
-main {
-  background-color: antiquewhite;
+  background-color: #1cb0f6;
 }
 
-form label {
-  color: black;
-}
-form .answer {
-  color: rgb(164, 168, 168);
-  background-color: blueviolet;
+/* navbar */
+
+.nav-bar {
+  height: 10vh;
+  border-radius: 0 0 10px 10px;
+  background-color: rgb(9, 48, 99);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-article {
-  background-color: cadetblue;
+.nav-bar__link {
+  color: white;
+  text-decoration: none;
+  margin-left: 2rem;
+  padding: 0.5rem;
+  border: 1px solid white;
+  border-radius: 10px;
+  font-weight: 300;
+}
+
+.nav-bar__link:hover {
+  color: white;
+  background-color: #5ac4f5;
+}
+
+/* home */
+
+.home {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home__title {
+  color: rgb(211, 226, 6);
+  margin-top: 5rem;
+  font-weight: 900;
+  font-size: 3rem;
+}
+
+.home__instructions {
+  margin-top: 1.5rem;
+  font-size: larger;
+}
+
+.home__link {
+  margin-top: 1.2rem;
+  padding: 0.5rem 1rem;
+  background-color: rgb(0, 255, 21);
+  border: 0;
+  border-radius: 10px;
+  color: rgb(0, 71, 6);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.home__link:hover {
+  background-color: rgb(0, 71, 6);
+  color: rgb(0, 255, 21);
+  cursor: pointer;
+}
+
+/* game */
+
+.game__score {
+  position: absolute;
+  right: 10%;
+  top: 12vh;
+  font-weight: 900;
+  color: rgb(9, 48, 99);
+}
+
+.question {
+  margin-top: 8vh;
+  padding: 0 3rem;
+}
+
+.question__title {
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: rgb(9, 48, 99);
+}
+
+.question__answer {
+  margin-top: 0.5rem;
+}
+
+.question__radio {
+  margin-top: 1rem;
+}
+
+.question__answer[type="radio"]:checked + label {
+  color: white;
+}
+
+.question__answer--correct {
+  color: rgb(255, 255, 255);
+  background-color: rgb(16, 122, 5);
+  border-radius: 3px;
+}
+
+.question__answer__label {
+  cursor: pointer;
+}
+
+.question__submit {
+  margin-top: 2rem;
+  background-color: rgb(0, 255, 21);
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 10px;
+  color: rgb(0, 71, 6);
+  font-weight: 900;
+}
+
+.question__submit:hover {
+  background-color: rgb(0, 71, 6);
+  color: rgb(0, 255, 21);
+  cursor: pointer;
+}
+
+.question__loading {
+  margin-top: 8vh;
+  padding: 0 3rem;
+  font-weight: 900;
+}
+
+/* game-over */
+
+.game-over {
+  margin-top: 8vh;
+  padding: 0 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-over__title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: rgb(9, 48, 99);
+  text-transform: uppercase;
+}
+
+.game-over__score {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: rgb(9, 48, 99);
+}
+
+.game-over__form {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-over__name {
+  margin-top: 0.2rem;
+  height: 1.5rem;
+}
+
+.game-over__button--submit {
+  margin-top: 1.2rem;
+  padding: 0.5rem 1rem;
+  background-color: rgb(0, 255, 21);
+  border: 0;
+  border-radius: 10px;
+  color: rgb(0, 71, 6);
+  font-weight: 900;
+}
+
+.game-over__button--submit:hover {
+  background-color: rgb(0, 71, 6);
+  color: rgb(0, 255, 21);
+  cursor: pointer;
+}
+
+.game-over__button--cancel {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: rgb(146, 4, 2);
+  border: 0;
+  border-radius: 10px;
+  color: white;
+  font-weight: 900;
+}
+
+.game-over__button--cancel:hover {
+  background-color: white;
+  color: rgb(146, 4, 2);
+  cursor: pointer;
+}
+
+.game-over__loading {
+  margin-top: 8vh;
+  padding: 0 3rem;
+  font-weight: 900;
+}
+
+/* leaderboard */
+
+.leaderboard {
+  margin-top: 8vh;
+  padding: 0 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.leaderboard__title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: rgb(9, 48, 99);
+  text-transform: uppercase;
+}
+
+.leaderboard__list {
+  margin-top: 2rem;
+  padding: 1rem 1rem;
+  border-radius: 10px;
+  background-color: white;
+  height: 40vh;
+  min-width: 12rem;
+  overflow: scroll;
+  overflow-x: hidden;
+  list-style: none;
+}
+
+.leaderboard_item {
+  margin: 0.5rem;
+  padding: 0.5rem 2rem;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: rgb(9, 48, 99);
+  background-color: rgb(231, 229, 229);
+  border-radius: 10px;
+}
+
+.leaderboard__button {
+  margin-top: 1.2rem;
+  padding: 0.5rem 1rem;
+  background-color: rgb(0, 255, 21);
+  border: 0;
+  border-radius: 10px;
+  color: rgb(0, 71, 6);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.leaderboard__button:hover {
+  background-color: rgb(0, 71, 6);
+  color: rgb(0, 255, 21);
+  cursor: pointer;
+}
+
+.leaderboard__loading {
+  margin-top: 8vh;
+  padding: 0 3rem;
+  font-weight: 900;
 }

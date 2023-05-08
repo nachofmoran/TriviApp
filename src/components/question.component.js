@@ -2,7 +2,6 @@ import { LitElement, html } from "lit";
 import { GetQuestionUseCase } from "../usecases/get-question.usecase";
 import { state } from "../valtio/valtio";
 import { decodeQuestion } from "../utils/utils";
-//import "../main.css";
 
 export class QuestionComponent extends LitElement {
   static get properties() {
@@ -20,34 +19,36 @@ export class QuestionComponent extends LitElement {
     this.round = decodeQuestion(await GetQuestionUseCase.execute());
     this.loading = false;
     this.addEventListener("submit", this.answerButton);
-    this.elements = this.getElementsByClassName("answer");
-    this.buttonSubmit = this.getElementsByClassName("submit-button");
+    this.elements = this.getElementsByClassName("question__answer");
+    this.buttonSubmit = this.getElementsByClassName("question__submit");
   }
 
   render() {
     return html`
-      <h2>${state.count}</h2>
+      <p class="game__score">Score: ${state.count}</p>
       ${this.loading
-        ? html`<h2>Loading...</h2>`
+        ? html`<h2 class="question__loading">Loading question...</h2>`
         : html`
-            <article>
-              <p>${this.round?.question}</p>
-              <form>
+            <article class="question">
+              <p class="question__title">${this.round?.question}</p>
+              <form class="question__radio">
                 ${this.round?.answers.map(
                   (answer, index) => html`<input
                       id="answer${index}"
                       type="radio"
                       name="answer"
-                      class="answer"
+                      class="question__answer"
                       value="${answer.correct}"
                       @change="${this.enableSubmit}"
                     />
-                    <label for="answer${index}">${answer.data}</label><br />`
+                    <label class="question__answer__label" for="answer${index}"
+                      >${answer.data}</label
+                    ><br />`
                 )}
                 <input
                   type="submit"
                   id="answer-btn"
-                  class="submit-button"
+                  class="question__submit"
                   value="Answer"
                   disabled
                 />
@@ -75,16 +76,16 @@ export class QuestionComponent extends LitElement {
     } else {
       for (let i = 0; i < this.elements.length; i++) {
         if (this.elements[i].value === "true") {
-          this.elements[i].classList.add("correct");
-          console.log("clase añadida a: ", this.elements[i].classList);
+          const selector = "label[for=" + this.elements[i].id + "]";
+          const label = document.querySelector(selector);
+          label.classList.add("question__answer--correct");
         }
       }
-      //await this.delay(500);
+      await this.delay(1000);
 
       const message = new CustomEvent("game-over", {
         bubbles: true,
       });
-      console.log("resultado: ", this.getRadioValue());
       this.dispatchEvent(message);
     }
     for (let i = 0; i < this.elements.length; i++) {
@@ -97,7 +98,6 @@ export class QuestionComponent extends LitElement {
   }
 
   enableSubmit() {
-    console.log("Habilitamos submit");
     this.buttonSubmit[0].disabled = false;
   }
 

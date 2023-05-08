@@ -7,9 +7,7 @@ const decodeHtml = (html) => {
 };
 
 const decodeQuestion = (round) => {
-  console.log("esta entrando a decodificar");
   const question = decodeHtml(round.question);
-  console.log("question decodificada", question);
   const answers = [];
   round.answers.map((item) => {
     answers.push({ data: decodeHtml(item.data), correct: item.correct });

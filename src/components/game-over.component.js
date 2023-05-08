@@ -16,33 +16,41 @@ export class GameOverComponent extends LitElement {
   async connectedCallback() {
     super.connectedCallback();
     this.addEventListener("submit", this.submitScoreButton);
-    this.playerInput = this.getElementsByClassName("player-input");
-    this.buttonSubmit = this.getElementsByClassName("submit-button");
+    this.playerInput = this.getElementsByClassName("game-over__name");
+    this.buttonSubmit = this.getElementsByClassName(
+      "game-over__button--submit"
+    );
   }
 
   render() {
     return html`
       ${this.loading
-        ? html`<h2>saving score...</h2>`
+        ? html`<h2 class="game-over__loading">saving score...</h2>`
         : html`
-            <article>
-              <p>Game Over. Score: ${state.count}</p>
-              <form>
+            <article class="game-over">
+              <h2 class="game-over__title">Game Over</h2>
+              <p class="game-over__score">Score: ${state.count}</p>
+              <form class="game-over__form">
+                <label for="playerinput">Name</label>
                 <input
                   type="text"
                   id="playerinput"
-                  class="player-input"
+                  class="game-over__name"
                   value=""
                   @input="${this.enableSubmit}"
                 />
                 <input
                   type="submit"
-                  class="submit-button"
+                  class="game-over__button--submit"
                   id="submit-btn"
                   value="Submit"
                   disabled
                 />
-                <button type="button" @click="${this.cancelButton}">
+                <button
+                  class="game-over__button--cancel"
+                  type="button"
+                  @click="${this.cancelButton}"
+                >
                   Cancel
                 </button>
               </form>
@@ -65,7 +73,6 @@ export class GameOverComponent extends LitElement {
   }
 
   enableSubmit() {
-    console.log("Habilitamos submit");
     if (this.playerInput[0].value !== "") this.buttonSubmit[0].disabled = false;
     else this.buttonSubmit[0].disabled = true;
   }

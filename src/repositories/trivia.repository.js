@@ -6,7 +6,7 @@ export class TriviaRepository {
   async getQuestion() {
     return await (
       await axios.get(
-        "https://opentdb.com/api.php?amount=1&difficulty=hard&type=multiple"
+        "https://opentdb.com/api.php?amount=1&difficulty=easy&type=multiple"
       )
     ).data.results[0];
   }
