@@ -1,7 +1,8 @@
 import { LitElement, html } from "lit";
 import { GetQuestionUseCase } from "../usecases/get-question.usecase";
 import { state } from "../valtio/valtio";
-import { snapshot } from "valtio";
+import { decodeQuestion } from "../utils/utils";
+//import "../main.css";
 
 export class QuestionComponent extends LitElement {
   static get properties() {
@@ -9,19 +10,18 @@ export class QuestionComponent extends LitElement {
       round: { type: Object },
       elements: { type: Array },
       loading: { type: Boolean },
-      snap: { type: Object },
-      unsubscribe: { type: Function },
+      buttonSubmit: { type: Array },
     };
   }
 
   async connectedCallback() {
     super.connectedCallback();
-    this.snap = snapshot(state);
     this.loading = true;
-    this.round = await GetQuestionUseCase.execute();
+    this.round = decodeQuestion(await GetQuestionUseCase.execute());
     this.loading = false;
     this.addEventListener("submit", this.answerButton);
     this.elements = this.getElementsByClassName("answer");
+    this.buttonSubmit = this.getElementsByClassName("submit-button");
   }
 
   render() {
@@ -40,10 +40,17 @@ export class QuestionComponent extends LitElement {
                       name="answer"
                       class="answer"
                       value="${answer.correct}"
+                      @change="${this.enableSubmit}"
                     />
                     <label for="answer${index}">${answer.data}</label><br />`
                 )}
-                <input type="submit" id="answer-btn" value="Answer" />
+                <input
+                  type="submit"
+                  id="answer-btn"
+                  class="submit-button"
+                  value="Answer"
+                  disabled
+                />
               </form>
             </article>
           `}
@@ -60,26 +67,38 @@ export class QuestionComponent extends LitElement {
 
   async answerButton(e) {
     e.preventDefault();
-    let eventType = "";
     if (this.getRadioValue() === "true") {
-      eventType = "win";
       state.count++;
-      console.log("score", state.count);
       this.loading = true;
-      this.round = await GetQuestionUseCase.execute();
+      this.round = decodeQuestion(await GetQuestionUseCase.execute());
       this.loading = false;
     } else {
-      eventType = "game-over";
-    }
+      for (let i = 0; i < this.elements.length; i++) {
+        if (this.elements[i].value === "true") {
+          this.elements[i].classList.add("correct");
+          console.log("clase añadida a: ", this.elements[i].classList);
+        }
+      }
+      //await this.delay(500);
 
-    const message = new CustomEvent(eventType, {
-      bubbles: true,
-    });
-    console.log("resultado: ", this.getRadioValue());
-    this.dispatchEvent(message);
+      const message = new CustomEvent("game-over", {
+        bubbles: true,
+      });
+      console.log("resultado: ", this.getRadioValue());
+      this.dispatchEvent(message);
+    }
     for (let i = 0; i < this.elements.length; i++) {
       this.elements[i].checked = false;
     }
+  }
+
+  delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  enableSubmit() {
+    console.log("Habilitamos submit");
+    this.buttonSubmit[0].disabled = false;
   }
 
   createRenderRoot() {

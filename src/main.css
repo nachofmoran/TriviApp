@@ -8,3 +8,15 @@ html {
 main {
   background-color: antiquewhite;
 }
+
+form label {
+  color: black;
+}
+form .answer {
+  color: rgb(164, 168, 168);
+  background-color: blueviolet;
+}
+
+article {
+  background-color: cadetblue;
+}

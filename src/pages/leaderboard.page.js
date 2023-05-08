@@ -28,21 +28,25 @@ export class LeaderboardPage extends LitElement {
     this.loading = true;
     this.leaderboard = await GetLeaderboardUseCase.execute();
     console.log("leaderboard: ", this.leaderboard);
+    this.leaderboard.sort((a, b) => (a.score > b.score ? -1 : 1));
     this.loading = false;
   }
 
   render() {
     return html`
       <h1>Leaderboard</h1>
-      <h2>lit ${state.count}</h2>
-      <ul>
-        ${this.leaderboard?.map(
-          (item) => html`<li>
-            <p>${item.name}: ${item.score}</p>
-          </li> `
-        )}
-      </ul>
-      <a href="/">Let´s play</a>
+      ${this.loading
+        ? html`<h2>loading leaderboard...</h2>`
+        : html`
+            <ul>
+              ${this.leaderboard?.map(
+                (item) => html`<li>
+                  <p>${item.name}: ${item.score}</p>
+                </li> `
+              )}
+            </ul>
+          `}
+      <a href="/game">Let´s play</a>
     `;
   }
 

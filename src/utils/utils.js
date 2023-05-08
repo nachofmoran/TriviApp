@@ -1,7 +1,24 @@
+import { Question } from "../model/question";
+
 const decodeHtml = (html) => {
   const textArea = document.createElement("textarea");
   textArea.innerHTML = html;
   return textArea.value;
+};
+
+const decodeQuestion = (round) => {
+  console.log("esta entrando a decodificar");
+  const question = decodeHtml(round.question);
+  console.log("question decodificada", question);
+  const answers = [];
+  round.answers.map((item) => {
+    answers.push({ data: decodeHtml(item.data), correct: item.correct });
+  });
+
+  return new Question({
+    question,
+    answers,
+  });
 };
 
 const shuffleArray = (array) => {
@@ -13,4 +30,4 @@ const shuffleArray = (array) => {
   }
 };
 
-export { decodeHtml, shuffleArray };
+export { decodeHtml, shuffleArray, decodeQuestion };

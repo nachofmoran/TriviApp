@@ -9,6 +9,7 @@ export class GameOverComponent extends LitElement {
       loading: { type: Boolean },
       leaderBoard: { type: Array },
       playerInput: { type: Object },
+      submitButton: { type: Array },
     };
   }
 
@@ -16,17 +17,37 @@ export class GameOverComponent extends LitElement {
     super.connectedCallback();
     this.addEventListener("submit", this.submitScoreButton);
     this.playerInput = this.getElementsByClassName("player-input");
+    this.buttonSubmit = this.getElementsByClassName("submit-button");
   }
 
   render() {
     return html`
-      <article>
-        <p>Game Over. Score: ${state.count}</p>
-        <form>
-          <input type="text" id="playerinput" class="player-input" value="" />
-          <input type="submit" id="submit-btn" value="Submit" />
-        </form>
-      </article>
+      ${this.loading
+        ? html`<h2>saving score...</h2>`
+        : html`
+            <article>
+              <p>Game Over. Score: ${state.count}</p>
+              <form>
+                <input
+                  type="text"
+                  id="playerinput"
+                  class="player-input"
+                  value=""
+                  @input="${this.enableSubmit}"
+                />
+                <input
+                  type="submit"
+                  class="submit-button"
+                  id="submit-btn"
+                  value="Submit"
+                  disabled
+                />
+                <button type="button" @click="${this.cancelButton}">
+                  Cancel
+                </button>
+              </form>
+            </article>
+          `}
     `;
   }
 
@@ -37,6 +58,16 @@ export class GameOverComponent extends LitElement {
     this.loading = false;
     state.count = 0;
     Router.go("/leaderboard");
+  }
+
+  cancelButton() {
+    Router.go("/leaderboard");
+  }
+
+  enableSubmit() {
+    console.log("Habilitamos submit");
+    if (this.playerInput[0].value !== "") this.buttonSubmit[0].disabled = false;
+    else this.buttonSubmit[0].disabled = true;
   }
 
   createRenderRoot() {
