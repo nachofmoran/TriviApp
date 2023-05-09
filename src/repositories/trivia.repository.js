@@ -23,9 +23,10 @@ export class TriviaRepository {
 
   async addScore(player, score) {
     const ref = collection(db, "leaderboard");
-    await addDoc(ref, {
+    const response = await addDoc(ref, {
       name: player,
       score: score,
     });
+    return response;
   }
 }

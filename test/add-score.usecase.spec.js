@@ -13,13 +13,12 @@ describe("Add score use case", () => {
     TriviaRepository.mockImplementation(() => {
       return {
         addScore: () => {
-          return {};
+          return { id: "2HkbBpQ1jrGBuMcpB3jE" };
         },
       };
     });
 
-    //const data = await AddScoreUseCase.execute(LEADERBOARD, "Lorena", 7);
     const data = await AddScoreUseCase.execute("Lorena", 7);
-    expect(data.name).toBe("Lorena");
+    expect(data.id).toBeDefined();
   });
 });

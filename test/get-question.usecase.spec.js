@@ -19,8 +19,8 @@ describe("Get question use case", () => {
     });
 
     const data = await GetQuestionUseCase.execute();
-    console.log("data: ", data);
 
-    expect(true).toBe(true);
+    expect(data.question).toBe(QUESTION.question);
+    expect(data.answers.length).toBe(4);
   });
 });
